@@ -1,6 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const todos = [];
+interface Todos {
+  id: string;
+  label: string;
+  status: 'pending' | 'completed';
+}
+
+const todos: Todos[] = [];
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -15,14 +21,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
     case 'POST':
       console.log(':::POST', todos);
-      // const { todos } = context;
-      // mutate('home', todos.push(event.data));
-      // mutate('home', event.data);
 
-      // todos.push(event.data);
-
-      console.log('REQ', req);
-      console.log('RES', res);
+      todos.push(req.body);
 
       res.status(200).json(todos);
       break;

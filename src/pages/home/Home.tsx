@@ -24,7 +24,7 @@ const Home: React.FC = () => {
 
   const { data } = useFetch<Data[]>('home');
 
-  console.log('API', data);
+  // console.log('API', data);
 
   const handleInputChange = useCallback(event => {
     const { value } = event.target;
@@ -81,21 +81,33 @@ const Home: React.FC = () => {
         </Form>
 
         <List>
-          {state.context.todos.map(todo => (
-            <ListItem key={todo.id} status={todo.status}>
-              <button type="button" onClick={() => handleCompleteTodo(todo.id)}>
-                Done
-              </button>
+          {state.context.todos.length > 0 ? (
+            <>
+              {state.context.todos.map(todo => (
+                <ListItem key={todo.id} status={todo.status}>
+                  <button
+                    type="button"
+                    onClick={() => handleCompleteTodo(todo.id)}
+                  >
+                    Done
+                  </button>
 
-              <p>{todo.label}</p>
+                  <p>{todo.label}</p>
 
-              {todo.status === 'pending' && (
-                <button type="button" onClick={() => handleRemoveTodo(todo.id)}>
-                  Delete
-                </button>
-              )}
-            </ListItem>
-          ))}
+                  {todo.status === 'pending' && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTodo(todo.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </ListItem>
+              ))}
+            </>
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </List>
       </Main>
     </Container>

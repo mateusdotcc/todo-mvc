@@ -32,6 +32,18 @@ type COMPLETE = { type: 'COMPLETE'; id: string };
 
 type Event = SUCCESS | FAILURE | ADD | REMOVE | COMPLETE;
 
+const requestData = async (context: Context) => {
+  const { todos } = context;
+
+  try {
+    const response = await api.get('home');
+
+    todos.push(response.data);
+  } catch (error) {
+    console.warn('API error', error);
+  }
+};
+
 export const todoMachine = Machine<Context, State, Event>(
   {
     id: 'todo',
@@ -39,10 +51,11 @@ export const todoMachine = Machine<Context, State, Event>(
     context: { todos: [] },
     states: {
       loading: {
-        entry: 'loading',
-        on: {
-          SUCCESS: 'start',
-          FAILURE: 'failure',
+        invoke: {
+          id: 'getTodos',
+          src: (context, _) => requestData(context),
+          onDone: 'start',
+          onError: 'failure',
         },
       },
 
@@ -73,25 +86,14 @@ export const todoMachine = Machine<Context, State, Event>(
   },
   {
     actions: {
-      loading: (context, _) => {
-        const { todos } = context;
+      add: async (_, event: ADD) => {
+        const { id, label, status } = event.data;
 
-        api.get('home').then(response => {
-          try {
-            if (response.status === 200) {
-              todos.push(response.data);
-
-              todoMachine.transition('loading', { type: 'SUCCESS' });
-            }
-          } catch (error) {
-            console.warn('API error', error);
-          }
+        await api.post('home', {
+          id,
+          label,
+          status,
         });
-      },
-
-      add: (_, event: ADD) => {
-        console.log('SUCCESS');
-        api.post('home', event.data);
       },
 
       remove: (context, event: REMOVE) => {
