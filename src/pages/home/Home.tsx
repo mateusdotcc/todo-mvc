@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { useFetch } from '../../hooks/useFetch';
 import Head from 'next/head';
 
 import { todoMachine } from '../../machines/todoMachine';
@@ -10,14 +11,20 @@ import { Container } from '../../components';
 
 import { Main, Form, List, ListItem, Input } from './Home.styled';
 
+interface Data {
+  id: string;
+  label: string;
+  status: 'pending' | 'completed';
+}
+
 const Home: React.FC = () => {
   const [state, send] = useMachine(todoMachine);
 
   const [label, setLabel] = useState('');
 
-  useEffect(() => {
-    console.log('Machine!', state);
-  }, []);
+  const { data } = useFetch<Data[]>('home');
+
+  console.log('API', data);
 
   const handleInputChange = useCallback(event => {
     const { value } = event.target;

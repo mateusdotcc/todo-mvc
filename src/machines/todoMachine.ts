@@ -1,4 +1,7 @@
-import { Machine } from 'xstate';
+import { Machine, spawn, send } from 'xstate';
+import { mutate } from 'swr';
+
+import api from '../services/api';
 
 type Todo = {
   id: string;
@@ -12,63 +15,83 @@ interface Context {
 
 interface State {
   states: {
-    idle: {};
+    loading: {};
+    start: {};
     add: {};
     remove: {};
     complete: {};
+    failure: {};
   };
 }
 
+type SUCCESS = { type: 'SUCCESS' };
+type FAILURE = { type: 'FAILURE' };
 type ADD = { type: 'ADD'; data: Todo };
-
 type REMOVE = { type: 'REMOVE'; id: string };
-
 type COMPLETE = { type: 'COMPLETE'; id: string };
 
-type Event = ADD | REMOVE | COMPLETE;
+type Event = SUCCESS | FAILURE | ADD | REMOVE | COMPLETE;
 
 export const todoMachine = Machine<Context, State, Event>(
   {
     id: 'todo',
-    initial: 'idle',
-    context: {
-      todos: [],
-    },
+    initial: 'loading',
+    context: { todos: [] },
     states: {
-      idle: {
+      loading: {
+        entry: 'loading',
+        on: {
+          SUCCESS: 'start',
+          FAILURE: 'failure',
+        },
+      },
+
+      start: {
         on: {
           ADD: 'add',
           REMOVE: 'remove',
           COMPLETE: 'complete',
         },
       },
+
       add: {
-        on: {
-          ADD: {
-            actions: ['add'],
-          },
-          REMOVE: {
-            actions: ['remove'],
-          },
-          COMPLETE: {
-            actions: ['complete'],
-          },
-        },
+        entry: ['add'],
       },
+
       remove: {
         entry: ['remove'],
       },
+
       complete: {
         entry: ['complete'],
+      },
+
+      failure: {
+        entry: ['failure'],
       },
     },
   },
   {
     actions: {
-      add: (context, event: ADD) => {
+      loading: (context, _) => {
         const { todos } = context;
 
-        todos.push(event.data);
+        api.get('home').then(response => {
+          try {
+            if (response.status === 200) {
+              todos.push(response.data);
+
+              todoMachine.transition('loading', { type: 'SUCCESS' });
+            }
+          } catch (error) {
+            console.warn('API error', error);
+          }
+        });
+      },
+
+      add: (_, event: ADD) => {
+        console.log('SUCCESS');
+        api.post('home', event.data);
       },
 
       remove: (context, event: REMOVE) => {
@@ -76,7 +99,9 @@ export const todoMachine = Machine<Context, State, Event>(
 
         const index = todos.findIndex(todo => todo.id === event.id);
 
-        todos.splice(index, 1);
+        mutate('home', [...todos, todos.splice(index, 1)]);
+
+        // todos.splice(index, 1);
       },
 
       complete: (context, event: COMPLETE) => {
@@ -94,6 +119,10 @@ export const todoMachine = Machine<Context, State, Event>(
         if (item.status === 'completed') {
           todos.push(todos.splice(index, 1)[0]);
         }
+      },
+
+      failure: () => {
+        console.warn('API Failed');
       },
     },
   },
