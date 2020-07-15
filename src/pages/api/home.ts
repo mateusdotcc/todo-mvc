@@ -1,40 +1,54 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-interface Todos {
-  id: string;
-  label: string;
-  status: 'pending' | 'completed';
-}
+import { Todo } from '../../machines/todos/types';
 
-const todos: Todos[] = [];
+const todos: Todo[] = [];
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-  const { method } = req;
-
-  console.log('METHOD', method);
+export default (request: NextApiRequest, response: NextApiResponse<Todo[]>) => {
+  const { method } = request;
 
   switch (method) {
     case 'GET':
-      console.log(':::GET ', todos);
-      res.status(200).json(todos);
+      response.status(200).json(todos);
       break;
 
     case 'POST':
-      console.log(':::POST', todos);
-
-      todos.push(req.body);
-
-      res.status(200).json(todos);
+      todos.push(request.body);
+      response.status(200).json(todos);
       break;
 
     case 'PUT':
-      console.log(':::PUT ', req);
-      res.status(200).json({ message: 'PUT method' });
+      const {
+        data: { id: ID },
+      } = request.body;
+
+      const indexTodo = todos.findIndex(todo => todo.id === ID);
+
+      const item = todos[indexTodo];
+
+      const updateStatus = item.status === 'pending' ? 'completed' : 'pending';
+
+      item.status = updateStatus;
+
+      if (item.status === 'completed') {
+        todos.push(todos.splice(indexTodo, 1)[0]);
+      }
+
+      response.status(200).json(todos);
+      break;
+
+    case 'DELETE':
+      const { id } = request.query;
+
+      const index = todos.findIndex(todo => todo.id === id);
+
+      todos.splice(index, 1);
+
+      response.status(200).json(todos);
       break;
 
     default:
-      console.log('sei lá');
-      res.setHeader('Allow', ['GET', 'PUT']);
-      res.status(405).end(`Method ${method} not Allowed`);
+      response.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+      response.status(405).end(`Method ${method} not Allowed`);
   }
 };

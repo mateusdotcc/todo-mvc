@@ -5,6 +5,7 @@ module.exports = {
   ) {
     return {
       '/': { page: '/home/Home' },
+      '/:id': { page: '/home/Home' },
     };
   },
 };

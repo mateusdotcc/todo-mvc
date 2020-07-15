@@ -1,30 +1,20 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useFetch } from '../../hooks/useFetch';
 import Head from 'next/head';
 
-import { todoMachine } from '../../machines/todoMachine';
+import { todoMachine } from '../../machines/todos/machine';
 
 import { Container } from '../../components';
 
 import { Main, Form, List, ListItem, Input } from './Home.styled';
 
-interface Data {
-  id: string;
-  label: string;
-  status: 'pending' | 'completed';
-}
-
 const Home: React.FC = () => {
+  const [label, setLabel] = useState('');
   const [state, send] = useMachine(todoMachine);
 
-  const [label, setLabel] = useState('');
-
-  const { data } = useFetch<Data[]>('home');
-
-  // console.log('API', data);
+  const { todos } = state.context;
 
   const handleInputChange = useCallback(event => {
     const { value } = event.target;
@@ -57,7 +47,7 @@ const Home: React.FC = () => {
   }, []);
 
   const handleCompleteTodo = useCallback((id: string) => {
-    send({ type: 'COMPLETE', id });
+    send({ type: 'DONE', id });
   }, []);
 
   return (
@@ -81,9 +71,9 @@ const Home: React.FC = () => {
         </Form>
 
         <List>
-          {state.context.todos.length > 0 ? (
+          {todos.length > 0 ? (
             <>
-              {state.context.todos.map(todo => (
+              {todos.map(todo => (
                 <ListItem key={todo.id} status={todo.status}>
                   <button
                     type="button"
@@ -106,7 +96,7 @@ const Home: React.FC = () => {
               ))}
             </>
           ) : (
-            <h1>Loading...</h1>
+            <h1>Empty</h1>
           )}
         </List>
       </Main>
