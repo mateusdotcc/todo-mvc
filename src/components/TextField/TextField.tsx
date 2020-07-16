@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 
-import { Container } from './TextField.styled';
+import { Container, Input } from './TextField.styled';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -9,7 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 const TextField: React.FC<Props> = ({ className, placeholder, ...rest }) => {
   return (
     <Container className={className}>
-      <input placeholder={placeholder} {...rest} />
+      <Input placeholder={placeholder} {...rest} />
     </Container>
   );
 };

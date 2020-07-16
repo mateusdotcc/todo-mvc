@@ -2,13 +2,24 @@ import React, { useCallback, useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
-import Head from 'next/head';
-
 import { todoMachine } from '../../machines/todos/machine';
 
-import { Container } from '../../components';
+import Head from 'next/head';
 
-import { Main, Form, List, ListItem, Input } from './Home.styled';
+import { FiPlus } from 'react-icons/fi';
+
+import { TaskItem } from '../../components';
+
+import {
+  Header,
+  HeaderContainer,
+  Center,
+  Form,
+  SubmitButton,
+  List,
+  ListItem,
+  Input,
+} from './Home.styled';
 
 const Home: React.FC = () => {
   const [label, setLabel] = useState('');
@@ -51,56 +62,46 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <title>Todo MVC</title>
       </Head>
 
-      <Main>
-        <Form>
-          <Input
-            type="text"
-            value={label}
-            placeholder="Add task..."
-            onChange={handleInputChange}
-          />
-          <button type="submit" onClick={handleSubmit}>
-            Add
-          </button>
-        </Form>
+      <Header>
+        <HeaderContainer>
+          <Form>
+            <Input
+              type="text"
+              value={label}
+              placeholder="Task Title"
+              onChange={handleInputChange}
+            />
 
+            <SubmitButton type="submit" icon={FiPlus} onClick={handleSubmit} />
+          </Form>
+        </HeaderContainer>
+      </Header>
+
+      <Center>
         <List>
           {todos.length > 0 ? (
             <>
               {todos.map(todo => (
-                <ListItem key={todo.id} status={todo.status}>
-                  <button
-                    type="button"
-                    onClick={() => handleCompleteTodo(todo.id)}
-                  >
-                    Done
-                  </button>
-
-                  <p>{todo.label}</p>
-
-                  {todo.status === 'pending' && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTodo(todo.id)}
-                    >
-                      Delete
-                    </button>
-                  )}
-                </ListItem>
+                <TaskItem
+                  key={todo.id}
+                  label={todo.label}
+                  onClickDone={() => handleCompleteTodo(todo.id)}
+                  onClickDelete={() => handleRemoveTodo(todo.id)}
+                />
               ))}
             </>
           ) : (
             <h1>Empty</h1>
           )}
         </List>
-      </Main>
-    </Container>
+      </Center>
+    </>
   );
 };
 
