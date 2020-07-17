@@ -1,20 +1,32 @@
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 
-import { Container, ButtonDone, ButtonDelete } from './TaskItem.styled';
+import Check from './components/Check/Check';
+
+import { Container, Label, ButtonDone, ButtonDelete } from './TaskItem.styled';
+
+type Status = 'pending' | 'completed';
 
 interface Props {
   label: string;
+  status: Status;
   onClickDone(): void;
   onClickDelete(): void;
 }
 
-const TaskItem: React.FC<Props> = ({ label, onClickDone, onClickDelete }) => {
+const TaskItem: React.FC<Props> = ({
+  label,
+  status,
+  onClickDone,
+  onClickDelete,
+}) => {
   return (
-    <Container>
-      <ButtonDone onClick={onClickDone}>Done</ButtonDone>
+    <Container status={status}>
+      <ButtonDone onClick={onClickDone}>
+        <Check status={status} />
+      </ButtonDone>
 
-      <span>{label}</span>
+      <Label>{label}</Label>
 
       <ButtonDelete onClick={onClickDelete} icon={FiTrash2} />
     </Container>

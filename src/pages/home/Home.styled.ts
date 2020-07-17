@@ -66,13 +66,3 @@ export const List = styled.ul`
   width: 100%;
   list-style: none;
 `;
-
-export const ListItem = styled.li<{ status: 'pending' | 'completed' }>`
-  opacity: ${props => (props.status === 'completed' ? 0.5 : 1)};
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  width: 100%;
-`;

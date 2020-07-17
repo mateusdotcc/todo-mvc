@@ -7,6 +7,7 @@ import { todoMachine } from '../../machines/todos/machine';
 import Head from 'next/head';
 
 import { FiPlus } from 'react-icons/fi';
+// import IllustrationEmpty from '/assets/svg/meditating.svg';
 
 import { TaskItem } from '../../components';
 
@@ -17,7 +18,6 @@ import {
   Form,
   SubmitButton,
   List,
-  ListItem,
   Input,
 } from './Home.styled';
 
@@ -91,13 +91,17 @@ const Home: React.FC = () => {
                 <TaskItem
                   key={todo.id}
                   label={todo.label}
+                  status={todo.status}
                   onClickDone={() => handleCompleteTodo(todo.id)}
                   onClickDelete={() => handleRemoveTodo(todo.id)}
                 />
               ))}
             </>
           ) : (
-            <h1>Empty</h1>
+            <>
+              Empty
+              {/* <IllustrationEmpty /> */}
+            </>
           )}
         </List>
       </Center>
