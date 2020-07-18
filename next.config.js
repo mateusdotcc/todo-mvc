@@ -1,7 +1,7 @@
-const path = require('path');
 const withReactSvg = require('next-react-svg');
+const path = require('path');
 
-module.exports = withReactSvg({
+module.exports = {
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId },
@@ -11,8 +11,15 @@ module.exports = withReactSvg({
       '/:id': { page: '/home/Home' },
     };
   },
-  include: path.resolve(__dirname, 'src/assets/svg'),
-  webpack(config, options) {
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: {
+        test: /\.(js|ts)x?$/,
+      },
+      use: ['@svgr/webpack'],
+    });
+
     return config;
   },
-});
+};

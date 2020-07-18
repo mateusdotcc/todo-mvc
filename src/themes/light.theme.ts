@@ -1,7 +1,11 @@
+import Breakpoints from './breakpoints';
+
 export const COLORS = {
-  primary: '#5A3EA3',
-  secondary: '#F9FAFC',
-  background: '#FFFFFF',
+  primary: '#5a3ea3',
+  secondary: '#f9fafc',
+  onSecondary: '#cccccc',
+  tertiary: '#ea4c89',
+  background: '#ffffff',
 };
 
 export const FONTS = {
@@ -20,3 +24,5 @@ export const SHADOWS = {
 export const SIZES = {
   appWidth: 600,
 };
+
+export const BREAKPOINTS = Breakpoints;

@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
-import { shade } from 'polished';
+import { shade, lighten } from 'polished';
 
 import Button from '../Button/Button';
 
 import { easeOutExpo } from '../../assets/styles/easings';
-import { COLORS, SHADOWS } from '../../themes/light.theme';
+import { COLORS, SHADOWS, FONTS } from '../../themes/light.theme';
 
 type Status = 'pending' | 'completed';
 
@@ -29,8 +29,8 @@ export const ButtonDelete = styled(Button)`
     visibility 0.21s ${easeOutExpo};
 
   svg {
-    color: ${COLORS.primary};
-    transition: color 0.2s;
+    color: ${COLORS.tertiary};
+    transition: color 0.25s;
   }
 
   &:hover {
@@ -43,7 +43,14 @@ export const ButtonDelete = styled(Button)`
 `;
 
 export const Label = styled.span`
+  font-family: ${FONTS.light};
+  width: calc(100% - 10rem);
+
+  margin-left: 2rem;
+
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   transition: color 0.25s;
 
@@ -64,7 +71,7 @@ export const Label = styled.span`
 
 export const Container = styled.li<{ status: Status }>`
   background-color: ${COLORS.secondary};
-  box-shadow: ${SHADOWS.input};
+  box-shadow: ${props => (props.status === 'pending' ? SHADOWS.input : 'none')};
 
   display: flex;
   flex-direction: row;
@@ -75,7 +82,16 @@ export const Container = styled.li<{ status: Status }>`
   padding: 3rem 2rem;
   border-radius: 1rem;
 
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, background-color 0.25s, box-shadow 0.25s;
+
+  &:hover {
+    ${props =>
+      props.status === 'pending' &&
+      css`
+        background-color: ${lighten(0.5, COLORS.primary)};
+        box-shadow: none;
+      `}
+  }
 
   ${props =>
     props.status === 'completed' &&
@@ -92,6 +108,12 @@ export const Container = styled.li<{ status: Status }>`
         opacity: 0;
         right: -15px;
         visibility: hidden;
+      }
+
+      &:hover {
+        > button div {
+          border-color: ${lighten(0.3, COLORS.primary)};
+        }
       }
     `}
 `;

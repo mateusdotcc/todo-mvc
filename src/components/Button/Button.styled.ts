@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
+import { shade, darken, lighten } from 'polished';
 
 import { COLORS, FONTS } from '../../themes/light.theme';
 
@@ -16,12 +16,22 @@ export const Container = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${shade(0.1, COLORS.primary)};
+    background-color: ${lighten(0.2, COLORS.primary)};
+  }
+
+  &:disabled {
+    background-color: transparent;
+    cursor: auto;
+
+    svg {
+      color: ${darken(0.1, COLORS.secondary)};
+    }
   }
 `;
 
 export const Label = styled.span`
   font-family: ${FONTS.medium};
-  font-size: 1.8rem;
   color: ${COLORS.background};
+
+  font-size: 1.8rem;
 `;

@@ -7,7 +7,7 @@ import { todoMachine } from '../../machines/todos/machine';
 import Head from 'next/head';
 
 import { FiPlus } from 'react-icons/fi';
-// import IllustrationEmpty from '/assets/svg/meditating.svg';
+import IllustrationEmpty from '../../assets/svg/meditating.svg';
 
 import { TaskItem } from '../../components';
 
@@ -17,8 +17,10 @@ import {
   Center,
   Form,
   SubmitButton,
+  Counter,
   List,
   Input,
+  Empty,
 } from './Home.styled';
 
 const Home: React.FC = () => {
@@ -29,7 +31,6 @@ const Home: React.FC = () => {
 
   const handleInputChange = useCallback(event => {
     const { value } = event.target;
-
     setLabel(value);
   }, []);
 
@@ -69,6 +70,8 @@ const Home: React.FC = () => {
       </Head>
 
       <Header>
+        <h1>Organize your works</h1>
+
         <HeaderContainer>
           <Form>
             <Input
@@ -78,7 +81,12 @@ const Home: React.FC = () => {
               onChange={handleInputChange}
             />
 
-            <SubmitButton type="submit" icon={FiPlus} onClick={handleSubmit} />
+            <SubmitButton
+              type="submit"
+              icon={FiPlus}
+              onClick={handleSubmit}
+              disabled={label.length === 0}
+            />
           </Form>
         </HeaderContainer>
       </Header>
@@ -87,6 +95,15 @@ const Home: React.FC = () => {
         <List>
           {todos.length > 0 ? (
             <>
+              <header>
+                <h2>All Tasks</h2>
+
+                <Counter>
+                  {todos.filter(todo => todo.status === 'completed').length} of{' '}
+                  {todos.length} done
+                </Counter>
+              </header>
+
               {todos.map(todo => (
                 <TaskItem
                   key={todo.id}
@@ -98,10 +115,14 @@ const Home: React.FC = () => {
               ))}
             </>
           ) : (
-            <>
-              Empty
-              {/* <IllustrationEmpty /> */}
-            </>
+            <Empty>
+              <IllustrationEmpty />
+
+              <h2>
+                Let's organize your works with priority and do everything
+                without stress.
+              </h2>
+            </Empty>
           )}
         </List>
       </Center>

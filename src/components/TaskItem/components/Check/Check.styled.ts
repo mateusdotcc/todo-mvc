@@ -6,18 +6,19 @@ import { COLORS } from '../../../../themes/light.theme';
 type Container = 'pending' | 'completed';
 
 export const Container = styled.div<{ status?: Container }>`
+  background-color: ${COLORS.background};
   border: 0.2rem solid ${COLORS.primary};
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-right: 2rem;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
 
-  transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out,
+    border 0.25s;
 
   svg {
     opacity: 0;
