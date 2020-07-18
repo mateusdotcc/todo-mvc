@@ -1,1 +1,2 @@
-src/themes/light.theme.ts;
+src/themes/light.theme.ts
+src/pages/_document.tsx

@@ -3,9 +3,9 @@ import { AppProps } from 'next/app';
 
 import { Container } from '../components';
 
-import '../assets/styles/typography.css';
+import '../themes/styles/typography.css';
 
-import GlobalStyles from '../assets/styles/global';
+import GlobalStyles from '../themes/styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -2,9 +2,7 @@ import React from 'react';
 
 import { Container as Wrapper } from './Container.styled';
 
-interface Props {}
-
-const Container: React.FC<Props> = ({ children }) => {
+const Container: React.FC = ({ children }) => {
   return <Wrapper>{children}</Wrapper>;
 };
 

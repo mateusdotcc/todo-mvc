@@ -3,3 +3,5 @@ node_modules
 dist
 
 src/themes/light.theme.ts
+src/pages/_document.tsx
+

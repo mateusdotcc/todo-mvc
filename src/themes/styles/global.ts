@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-import { COLORS } from '../../themes/light.theme';
+import { COLORS } from '../light.theme';
 
 const globalStyle = createGlobalStyle`
   ${normalize};
