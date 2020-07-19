@@ -93,6 +93,7 @@ export const List = styled.ul`
   flex-direction: column;
 
   width: 100%;
+  margin-bottom: 8rem;
   list-style: none;
 
   header {

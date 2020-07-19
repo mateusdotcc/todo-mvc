@@ -7,8 +7,8 @@ module.exports = {
     { dev, dir, outDir, distDir, buildId },
   ) {
     return {
-      '/': { page: '/screens/Home' },
-      '/:id': { page: '/screens/Home' },
+      '/': { page: '/home' },
+      '/:id': { page: '/Home' },
     };
   },
   webpack(config) {
