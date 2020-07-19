@@ -1,18 +1,13 @@
 import { Machine } from 'xstate';
 
-import api from '~/services/api';
+import { Context, State, Event, ADD, REMOVE, DONE } from './types';
 
-import { Context, State, Event, Todo, ADD, REMOVE, DONE } from './types';
-
-const requestData = async (context: Context): Promise<Todo[]> => {
-  try {
-    const response = await api.get('home');
-
-    return (context.todos = response.data);
-  } catch (error) {
-    console.warn('API error', error);
-  }
-};
+import {
+  getTodo,
+  postTodo,
+  patchTodo,
+  deleteTodo,
+} from '~/services/todoService';
 
 export const todoMachine = Machine<Context, State, Event>(
   {
@@ -23,7 +18,7 @@ export const todoMachine = Machine<Context, State, Event>(
       loading: {
         invoke: {
           id: 'getTodos',
-          src: (context, _) => requestData(context),
+          src: (context, _) => getTodo(context),
           onDone: 'start',
           onError: 'failure',
         },
@@ -53,37 +48,13 @@ export const todoMachine = Machine<Context, State, Event>(
   },
   {
     actions: {
-      add: (_, event: ADD) => {
-        try {
-          api.post('home', event.data);
-        } catch (error) {
-          console.warn('::POST error', error);
-        }
-      },
+      add: (_, event: ADD) => postTodo(event.data),
 
-      remove: (_, event: REMOVE) => {
-        const { id } = event;
+      done: (_, event: DONE) => patchTodo(event.id),
 
-        try {
-          api.delete('home', { params: { id } });
-        } catch (error) {
-          console.warn('::DELETE error', error);
-        }
-      },
+      remove: (_, event: REMOVE) => deleteTodo(event.id),
 
-      done: (_, event: DONE) => {
-        const { id } = event;
-
-        try {
-          api.put('home', { data: { id } });
-        } catch (error) {
-          console.warn('::PUT error', error);
-        }
-      },
-
-      failure: () => {
-        console.warn('API Failed');
-      },
+      failure: () => console.error('API Failed'),
     },
   },
 );
