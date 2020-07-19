@@ -1,6 +1,6 @@
 import { Machine } from 'xstate';
 
-import api from '../../services/api';
+import api from '~/services/api';
 
 import { Context, State, Event, Todo, ADD, REMOVE, DONE } from './types';
 

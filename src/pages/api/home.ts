@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { Todo } from '../../machines/todos/types';
+import { Todo } from '~/machines/todos/types';
 
 const todos: Todo[] = [];
 

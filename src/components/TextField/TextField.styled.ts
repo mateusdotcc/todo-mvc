@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { COLORS } from '../../themes/light.theme';
+import { COLORS } from '~/themes/light.theme';
 
 export const Container = styled.span`
   background-color: ${COLORS.secondary};

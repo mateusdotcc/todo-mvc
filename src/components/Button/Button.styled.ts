@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { shade, darken, lighten } from 'polished';
+import { darken, lighten } from 'polished';
 
-import { COLORS, FONTS } from '../../themes/light.theme';
+import { COLORS, FONTS } from '~/themes/light.theme';
 
 export const Container = styled.button`
   background-color: ${COLORS.primary};

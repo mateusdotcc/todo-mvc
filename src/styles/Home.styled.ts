@@ -7,9 +7,9 @@ import {
   SIZES,
   FONTS,
   BREAKPOINTS,
-} from '../../themes/light.theme';
+} from '~/themes/light.theme';
 
-import { TextField, Button } from '../../components';
+import { TextField, Button } from '~/components';
 
 export const Header = styled.header`
   background-color: ${COLORS.secondary};

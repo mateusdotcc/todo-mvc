@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { SIZES, BREAKPOINTS } from '../../../themes/light.theme';
+import { SIZES, BREAKPOINTS } from '~/themes/light.theme';
 
 export const Container = styled.div`
   max-width: ${SIZES.appWidth}px;

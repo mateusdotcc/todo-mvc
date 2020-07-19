@@ -1,13 +1,13 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 
-import { Container } from '../components';
+import { Container } from '~/components';
 
-import '../themes/styles/typography.css';
+import '~/themes/styles/typography.css';
 
-import GlobalStyles from '../themes/styles/global';
+import GlobalStyles from '~/themes/styles/global';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyles />
@@ -19,4 +19,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default App;

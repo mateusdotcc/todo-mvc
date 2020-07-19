@@ -29,13 +29,18 @@
       "error",
       "ignorePackages",
       {
-        "ts": "never"
+        "ts": "never",
+        "tsx": "never"
       }
     ]
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {},
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "src"
+      }
     }
   }
 }

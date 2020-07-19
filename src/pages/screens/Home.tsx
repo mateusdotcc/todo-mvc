@@ -2,14 +2,14 @@ import React, { useCallback, useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { todoMachine } from '../../machines/todos/machine';
+import { todoMachine } from '~/machines/todos/machine';
 
 import Head from 'next/head';
 
 import { FiPlus } from 'react-icons/fi';
-import IllustrationEmpty from '../../assets/svg/meditating.svg';
+import IllustrationEmpty from '~/assets/svg/meditating.svg';
 
-import { TaskItem } from '../../components';
+import { TaskItem } from '~/components';
 
 import {
   Header,
@@ -21,7 +21,7 @@ import {
   List,
   Input,
   Empty,
-} from './Home.styled';
+} from '~/styles/Home.styled';
 
 const Home: React.FC = () => {
   const [label, setLabel] = useState('');

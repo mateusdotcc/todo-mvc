@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-import { COLORS } from '../../../../themes/light.theme';
+import { COLORS } from '~/themes/light.theme';
 
 type Container = 'pending' | 'completed';
 

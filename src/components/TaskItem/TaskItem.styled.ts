@@ -3,8 +3,8 @@ import { shade, lighten } from 'polished';
 
 import Button from '../Button/Button';
 
-import { easeOutExpo } from '../../themes/easings';
-import { COLORS, SHADOWS, FONTS } from '../../themes/light.theme';
+import { easeOutExpo } from '~/themes/easings';
+import { COLORS, SHADOWS, FONTS } from '~/themes/light.theme';
 
 type Status = 'pending' | 'completed';
 
