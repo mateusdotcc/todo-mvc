@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 import {
@@ -10,6 +10,20 @@ import {
 } from '~/themes/light.theme';
 
 import { TextField, Button } from '~/components';
+
+const float = keyframes`
+  0% {
+    transform: translatey(0);
+  }
+
+  50% {
+    transform: translatey(-2rem);
+  }
+
+  100% {
+    transform: translatey(0);
+  }
+`;
 
 export const Header = styled.header`
   background-color: ${COLORS.secondary};
@@ -80,14 +94,6 @@ export const SubmitButton = styled(Button)`
   }
 `;
 
-export const Counter = styled.p`
-  color: ${COLORS.onSecondary};
-  font-family: ${FONTS.medium};
-
-  font-size: 1.3rem;
-  text-align: right;
-`;
-
 export const List = styled.ul`
   display: flex;
   flex-direction: column;
@@ -122,6 +128,7 @@ export const Empty = styled.footer`
 
   svg {
     width: 30rem;
+    animation: ${float} 4s ease-in-out infinite;
   }
 
   h2 {

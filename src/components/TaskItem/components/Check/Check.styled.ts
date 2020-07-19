@@ -3,7 +3,7 @@ import { shade } from 'polished';
 
 import { COLORS } from '~/themes/light.theme';
 
-type Container = 'pending' | 'completed';
+type Container = 'pending' | 'done';
 
 export const Container = styled.div<{ status?: Container }>`
   background-color: ${COLORS.background};
@@ -25,7 +25,7 @@ export const Container = styled.div<{ status?: Container }>`
   }
 
   ${props =>
-    props.status === 'completed' &&
+    props.status === 'done' &&
     css`
       background-color: ${shade(0.2, COLORS.secondary)};
       border-color: ${shade(0.2, COLORS.secondary)};

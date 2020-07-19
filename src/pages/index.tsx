@@ -7,7 +7,7 @@ import { todoMachine } from '~/machines/todos/machine';
 import { FiPlus } from 'react-icons/fi';
 import IllustrationEmpty from '~/assets/svg/meditating.svg';
 
-import { TaskItem } from '~/components';
+import { TaskItem, Counter } from '~/components';
 
 import {
   Header,
@@ -15,7 +15,6 @@ import {
   Center,
   Form,
   SubmitButton,
-  Counter,
   List,
   Input,
   Empty,
@@ -37,8 +36,7 @@ const Home: React.FC = () => {
   const { todos } = state.context;
 
   const handleInputChange = useCallback(event => {
-    const { value } = event.target;
-    setLabel(value);
+    setLabel(event.target.value);
   }, []);
 
   const handleSubmit = useCallback(
@@ -107,10 +105,7 @@ const Home: React.FC = () => {
               <header>
                 <h2>All Tasks</h2>
 
-                <Counter>
-                  {todos.filter(todo => todo.status === 'completed').length} of{' '}
-                  {todos.length} done
-                </Counter>
+                <Counter todos={todos} />
               </header>
 
               {todos.map(todo => (

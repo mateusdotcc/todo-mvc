@@ -5,7 +5,7 @@ import Check from './components/Check/Check';
 
 import { Container, Label, ButtonDone, ButtonDelete } from './TaskItem.styled';
 
-type Status = 'pending' | 'completed';
+type Status = 'pending' | 'done';
 
 interface Props {
   label: string;

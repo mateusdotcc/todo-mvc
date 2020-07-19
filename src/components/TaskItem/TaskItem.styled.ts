@@ -6,7 +6,7 @@ import Button from '../Button/Button';
 import { easeOutExpo } from '~/themes/easings';
 import { COLORS, SHADOWS, FONTS } from '~/themes/light.theme';
 
-type Status = 'pending' | 'completed';
+type Status = 'pending' | 'done';
 
 export const ButtonDone = styled(Button)`
   padding: 0;
@@ -94,7 +94,7 @@ export const Container = styled.li<{ status: Status }>`
   }
 
   ${props =>
-    props.status === 'completed' &&
+    props.status === 'done' &&
     css`
       ${Label} {
         color: ${shade(0.2, COLORS.secondary)};

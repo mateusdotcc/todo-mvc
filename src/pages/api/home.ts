@@ -26,11 +26,11 @@ export default (request: NextApiRequest, response: NextApiResponse<Todo[]>) => {
 
       const item = todos[indexTodo];
 
-      const updateStatus = item.status === 'pending' ? 'completed' : 'pending';
+      const updateStatus = item.status === 'pending' ? 'done' : 'pending';
 
       item.status = updateStatus;
 
-      if (item.status === 'completed') {
+      if (item.status === 'done') {
         todos.push(todos.splice(indexTodo, 1)[0]);
       }
 
