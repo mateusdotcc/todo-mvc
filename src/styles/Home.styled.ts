@@ -80,7 +80,7 @@ export const Form = styled.form`
 
 export const Input = styled(TextField)`
   flex: 1;
-  max-width: calc(100% - 9rem);
+  max-width: calc(100% - 6rem);
   background-color: transparent;
 `;
 

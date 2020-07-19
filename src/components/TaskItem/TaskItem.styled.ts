@@ -44,7 +44,7 @@ export const ButtonDelete = styled(Button)`
 
 export const Label = styled.span`
   font-family: ${FONTS.light};
-  width: calc(100% - 10rem);
+  width: calc(100% - 9rem);
 
   margin-left: 2rem;
 
@@ -98,6 +98,8 @@ export const Container = styled.li<{ status: Status }>`
     css`
       ${Label} {
         color: ${shade(0.2, COLORS.secondary)};
+
+        width: 100%;
 
         &:before {
           width: calc(100% - 9.9rem);
