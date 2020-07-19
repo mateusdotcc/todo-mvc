@@ -18,7 +18,6 @@
     "react-icons": "^3.10.0",
     "styled-components": "^5.1.1",
     "styled-normalize": "^8.0.7",
-    "swr": "^0.2.3",
     "uuidv4": "^6.1.1",
     "xstate": "^4.11.0"
   },

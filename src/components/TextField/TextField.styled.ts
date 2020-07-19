@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { COLORS } from '~/themes/light.theme';
+import { COLORS, FONTS } from '~/themes/light.theme';
 
 export const Container = styled.span`
   background-color: ${COLORS.secondary};
@@ -16,4 +16,8 @@ export const Input = styled.input`
   border: 0;
 
   transition: box-shadow 0.3s;
+
+  ::placeholder {
+    font-family: ${FONTS.light};
+  }
 `;

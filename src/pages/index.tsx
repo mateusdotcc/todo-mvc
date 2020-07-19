@@ -1,10 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { todoMachine } from '~/machines/todos/machine';
-
-import Head from 'next/head';
 
 import { FiPlus } from 'react-icons/fi';
 import IllustrationEmpty from '~/assets/svg/meditating.svg';
@@ -23,8 +21,17 @@ import {
   Empty,
 } from '~/styles/Home.styled';
 
+const placeholders = [
+  'e.g. Meet Alex at 11am',
+  'e.g. Read every day',
+  'e.g. English class every weekday',
+  'e.g. Family lunch on Sunday',
+  'e.g. Renew gym every',
+];
+
 const Home: React.FC = () => {
   const [label, setLabel] = useState('');
+  const [placeholder, setPlaceholder] = useState('');
   const [state, send] = useMachine(todoMachine);
 
   const { todos } = state.context;
@@ -62,13 +69,15 @@ const Home: React.FC = () => {
     send({ type: 'DONE', id });
   }, []);
 
+  useEffect(() => {
+    const selectedPlaceholder =
+      placeholders[Math.floor(Math.random() * placeholders.length)];
+
+    setPlaceholder(selectedPlaceholder);
+  }, []);
+
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>Todo MVC</title>
-      </Head>
-
       <Header>
         <h1>Organize your works</h1>
 
@@ -77,7 +86,7 @@ const Home: React.FC = () => {
             <Input
               type="text"
               value={label}
-              placeholder="Task Title"
+              placeholder={placeholder}
               onChange={handleInputChange}
             />
 
