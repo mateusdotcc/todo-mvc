@@ -18,21 +18,27 @@ export default (request: NextApiRequest, response: NextApiResponse<Todo[]>) => {
       break;
 
     case 'PUT':
-      const {
-        data: { id: ID },
-      } = request.body;
+      const data: Todo = request.body;
+
+      console.log(data);
+
+      const { id: ID, label } = data;
 
       const indexTodo = todos.findIndex(todo => todo.id === ID);
 
       const item = todos[indexTodo];
 
-      const updateStatus = item.status === 'pending' ? 'done' : 'pending';
+      if (!label) {
+        const updateStatus = item.status === 'pending' ? 'done' : 'pending';
 
-      item.status = updateStatus;
+        item.status = updateStatus;
 
-      if (item.status === 'done') {
-        todos.push(todos.splice(indexTodo, 1)[0]);
+        if (item.status === 'done') {
+          todos.push(todos.splice(indexTodo, 1)[0]);
+        }
       }
+
+      if (label) item.label = label;
 
       response.status(200).json(todos);
       break;

@@ -1,11 +1,12 @@
 import { Machine } from 'xstate';
 
-import { Context, State, Event, ADD, REMOVE, DONE } from './types';
+import { Context, State, Event, ADD, UPDATE, DONE, REMOVE } from './types';
 
 import {
   getTodo,
   postTodo,
-  patchTodo,
+  updateTodoLabel,
+  doneTodo,
   deleteTodo,
 } from '~/services/todoService';
 
@@ -30,6 +31,10 @@ export const todoMachine = Machine<Context, State, Event>(
             target: 'loading',
             actions: ['add'],
           },
+          UPDATE: {
+            target: 'loading',
+            actions: ['update'],
+          },
           REMOVE: {
             target: 'loading',
             actions: ['remove'],
@@ -50,7 +55,13 @@ export const todoMachine = Machine<Context, State, Event>(
     actions: {
       add: (_, event: ADD) => postTodo(event.data),
 
-      done: (_, event: DONE) => patchTodo(event.id),
+      update: (_, event: UPDATE) => {
+        const { id, label } = event.data;
+
+        updateTodoLabel({ id, label });
+      },
+
+      done: (_, event: DONE) => doneTodo(event.id),
 
       remove: (_, event: REMOVE) => deleteTodo(event.id),
 

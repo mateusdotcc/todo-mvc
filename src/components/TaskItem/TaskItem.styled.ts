@@ -4,7 +4,7 @@ import { shade, lighten } from 'polished';
 import Button from '../Button/Button';
 
 import { easeOutExpo } from '~/themes/easings';
-import { COLORS, SHADOWS, FONTS } from '~/themes/light.theme';
+import { COLORS, SHADOWS } from '~/themes/light.theme';
 
 type Status = 'pending' | 'done';
 
@@ -42,15 +42,18 @@ export const ButtonDelete = styled(Button)`
   }
 `;
 
-export const Label = styled.span`
-  font-family: ${FONTS.light};
+export const InputLabel = styled.input`
   width: calc(100% - 9rem);
 
   margin-left: 2rem;
+  padding: 3rem 0;
 
+  background-color: transparent;
+  outline: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 0;
 
   transition: color 0.25s;
 
@@ -79,7 +82,7 @@ export const Container = styled.li<{ status: Status }>`
 
   position: relative;
   margin-bottom: 1rem;
-  padding: 3rem 2rem;
+  padding: 0 2rem;
   border-radius: 1rem;
 
   transition: opacity 0.2s ease-in-out, background-color 0.25s, box-shadow 0.25s;
@@ -96,7 +99,7 @@ export const Container = styled.li<{ status: Status }>`
   ${props =>
     props.status === 'done' &&
     css`
-      ${Label} {
+      ${InputLabel} {
         color: ${shade(0.2, COLORS.secondary)};
 
         width: 100%;

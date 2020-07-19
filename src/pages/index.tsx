@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Todo } from '~/machines/todos/types';
 import { todoMachine } from '~/machines/todos/machine';
 
 import { FiPlus } from 'react-icons/fi';
@@ -59,6 +60,10 @@ const Home: React.FC = () => {
     [label],
   );
 
+  const handleUpdateTodoLabel = useCallback(({ id, label }: Todo) => {
+    send({ type: 'UPDATE', data: { id, label } });
+  }, []);
+
   const handleRemoveTodo = useCallback((id: string) => {
     send({ type: 'REMOVE', id });
   }, []);
@@ -111,8 +116,10 @@ const Home: React.FC = () => {
               {todos.map(todo => (
                 <TaskItem
                   key={todo.id}
+                  id={todo.id}
                   label={todo.label}
                   status={todo.status}
+                  onChange={handleUpdateTodoLabel}
                   onClickDone={() => handleCompleteTodo(todo.id)}
                   onClickDelete={() => handleRemoveTodo(todo.id)}
                 />

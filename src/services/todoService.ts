@@ -10,7 +10,7 @@ export const getTodo = async (context: Context) => {
 
     return (context.todos = response.data);
   } catch (error) {
-    console.error('::API GET', error);
+    console.error('::API GET TODOS', error);
   }
 };
 
@@ -20,15 +20,27 @@ export const postTodo = async ({ id, label, status }: Todo) => {
 
     return response.data;
   } catch (error) {
-    console.error('::API POST', error);
+    console.error('::API POST TODO', error);
   }
 };
 
-export const patchTodo = async (id: string) => {
+export const updateTodoLabel = async ({ id, label }: Todo) => {
   try {
-    return await api.put(endpoint, { data: { id } });
+    const response = await api.put(endpoint, { data: { id, label } });
+
+    return response.data;
   } catch (error) {
-    console.error('::API PUT', error);
+    console.error('::API UPDATE TODO LABEL', error);
+  }
+};
+
+export const doneTodo = async (id: string) => {
+  try {
+    const response = await api.put(endpoint, { data: { id } });
+
+    return response.data;
+  } catch (error) {
+    console.error('::API DONE TODO', error);
   }
 };
 
@@ -36,6 +48,6 @@ export const deleteTodo = async (id: string) => {
   try {
     return await api.delete(endpoint, { params: { id } });
   } catch (error) {
-    console.error('::API DELETE', error);
+    console.error('::API DELETE TODO', error);
   }
 };
