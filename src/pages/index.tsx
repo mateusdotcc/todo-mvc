@@ -72,7 +72,7 @@ const Home: React.FC = () => {
       placeholders[Math.floor(Math.random() * placeholders.length)];
 
     setPlaceholder(selectedPlaceholder);
-  }, [todos]);
+  }, [handleSubmit]);
 
   return (
     <>
