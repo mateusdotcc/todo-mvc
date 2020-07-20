@@ -1,4 +1,4 @@
-type Status = 'pending' | 'done';
+export type Status = 'pending' | 'done';
 
 export type Todo = {
   id: string;

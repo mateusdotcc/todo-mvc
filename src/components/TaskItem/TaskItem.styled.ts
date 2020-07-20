@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 import { shade, lighten } from 'polished';
 
-import Button from '../Button/Button';
+import { Status } from '~/machines/todos/types';
 
 import { easeOutExpo } from '~/themes/easings';
 import { COLORS, SHADOWS } from '~/themes/light.theme';
 
-type Status = 'pending' | 'done';
+import Button from '../Button/Button';
 
 export const ButtonDone = styled(Button)`
   padding: 0;
@@ -42,20 +42,10 @@ export const ButtonDelete = styled(Button)`
   }
 `;
 
-export const InputLabel = styled.input`
-  width: calc(100% - 9rem);
+export const ContainerInputLabel = styled.span`
+  width: calc(100% - 11rem);
 
   margin-left: 2rem;
-  padding: 3rem 0;
-
-  background-color: transparent;
-  outline: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border: 0;
-
-  transition: color 0.25s;
 
   &:before {
     background-color: ${shade(0.2, COLORS.secondary)};
@@ -65,11 +55,28 @@ export const InputLabel = styled.input`
     display: inline-block;
     position: absolute;
     top: 50%;
+    right: 32px;
     width: 0%;
     height: 0.1rem;
 
     transition: width 0.25s ${easeOutExpo};
   }
+`;
+
+export const InputLabel = styled.input`
+  padding: 3rem 0;
+
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  border: 0;
+
+  transition: color 0.25s;
 `;
 
 export const Container = styled.li<{ status: Status }>`
@@ -99,14 +106,18 @@ export const Container = styled.li<{ status: Status }>`
   ${props =>
     props.status === 'done' &&
     css`
-      ${InputLabel} {
-        color: ${shade(0.2, COLORS.secondary)};
-
+      ${ContainerInputLabel} {
         width: 100%;
 
         &:before {
           width: calc(100% - 9.9rem);
         }
+      }
+
+      ${InputLabel} {
+        color: ${shade(0.2, COLORS.secondary)};
+
+        width: 100%;
       }
 
       ${ButtonDelete} {

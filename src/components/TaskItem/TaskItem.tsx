@@ -1,18 +1,19 @@
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 
+import { Status } from '~/machines/todos/types';
+
 import { Todo } from '~/machines/todos/types';
 
 import Check from './components/Check/Check';
 
 import {
   Container,
+  ContainerInputLabel,
   InputLabel,
   ButtonDone,
   ButtonDelete,
 } from './TaskItem.styled';
-
-type Status = 'pending' | 'done';
 
 interface Props {
   id: string;
@@ -37,10 +38,13 @@ const TaskItem: React.FC<Props> = ({
         <Check status={status} />
       </ButtonDone>
 
-      <InputLabel
-        value={label}
-        onChange={event => onChange({ id, label: event.target.value })}
-      />
+      <ContainerInputLabel>
+        <InputLabel
+          value={label}
+          onChange={event => onChange({ id, label: event.target.value })}
+          disabled={status === 'done'}
+        />
+      </ContainerInputLabel>
 
       <ButtonDelete onClick={onClickDelete} icon={FiTrash2} />
     </Container>

@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
@@ -10,6 +11,8 @@ import {
 } from '~/themes/light.theme';
 
 import { TextField, Button } from '~/components';
+
+type Input = InputHTMLAttributes<HTMLInputElement>;
 
 const float = keyframes`
   0% {
@@ -78,7 +81,11 @@ export const Form = styled.form`
   border-radius: 1rem;
 `;
 
-export const Input = styled(TextField)`
+export const Input = styled(TextField).attrs<{}, Input>({
+  autoCorrect: 'off',
+  autoComplete: 'off',
+  spellCheck: false,
+})`
   flex: 1;
   max-width: calc(100% - 6rem);
   background-color: transparent;

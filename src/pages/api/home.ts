@@ -4,6 +4,24 @@ import { Todo } from '~/machines/todos/types';
 
 const todos: Todo[] = [];
 
+function updateTodo({ id, label }: Todo) {
+  const index = todos.findIndex(todo => todo.id === id);
+
+  const item = todos[index];
+
+  if (!label) {
+    const updateStatus = item.status === 'pending' ? 'done' : 'pending';
+
+    item.status = updateStatus;
+
+    if (item.status === 'done') {
+      todos.push(todos.splice(index, 1)[0]);
+    }
+  }
+
+  if (label) item.label = label;
+}
+
 export default (request: NextApiRequest, response: NextApiResponse<Todo[]>) => {
   const { method } = request;
 
@@ -14,31 +32,14 @@ export default (request: NextApiRequest, response: NextApiResponse<Todo[]>) => {
 
     case 'POST':
       todos.push(request.body);
+
       response.status(200).json(todos);
       break;
 
     case 'PUT':
-      const data: Todo = request.body;
+      const body: { data: Todo } = request.body;
 
-      console.log(data);
-
-      const { id: ID, label } = data;
-
-      const indexTodo = todos.findIndex(todo => todo.id === ID);
-
-      const item = todos[indexTodo];
-
-      if (!label) {
-        const updateStatus = item.status === 'pending' ? 'done' : 'pending';
-
-        item.status = updateStatus;
-
-        if (item.status === 'done') {
-          todos.push(todos.splice(indexTodo, 1)[0]);
-        }
-      }
-
-      if (label) item.label = label;
+      updateTodo(body.data);
 
       response.status(200).json(todos);
       break;

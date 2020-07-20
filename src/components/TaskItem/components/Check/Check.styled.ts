@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
+import { Status } from '~/machines/todos/types';
+
 import { COLORS } from '~/themes/light.theme';
 
-type Container = 'pending' | 'done';
-
-export const Container = styled.div<{ status?: Container }>`
+export const Container = styled.div<{ status?: Status }>`
   background-color: ${COLORS.background};
   border: 0.2rem solid ${COLORS.primary};
 

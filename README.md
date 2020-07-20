@@ -31,8 +31,8 @@ $ yarn or npm i
 # Run the application in development mode:
 npm run dev or yarn dev
 
-# The server will start at port: 3333 go to:
-http: // localhost: 3000
+# The server will start at port: 3000 go to:
+http://localhost:3000
 ```
 
 ### Technology
@@ -55,8 +55,15 @@ http: // localhost: 3000
 ---
 
 <a href="http://mateus.cc/">
-  <img style="border-radius: 50%;" src="https://avatars1.githubusercontent.com/u/1136951?s=460&u=8c98c3321dba4acb4ccceff196c5df2c073133b5&v=4" width="100px;" alt=""/>
-  <br />
+  <img
+    style="border-radius: 50%"
+    src="https://avatars1.githubusercontent.com/u/1136951?s=460&u=8c98c3321dba4acb4ccceff196c5df2c073133b5&v=4"
+    width="100px"
+    alt="Mateus Henrique"
+  />
+
+  <br>
+
   <sub>
     <b>Mateus Henrique</b>
   </sub>
