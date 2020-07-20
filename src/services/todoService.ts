@@ -5,16 +5,13 @@ import { Todo, Context } from '~/machines/todos/types';
 const endpoint = 'home';
 
 export const getTodo = async (context: Context) => {
-  setTimeout(async () => {
-    console.log('GET');
-    try {
-      const response = await api.get(endpoint);
+  try {
+    const response = await api.get(endpoint);
 
-      return (context.todos = response.data);
-    } catch (error) {
-      console.error('::API GET', error);
-    }
-  }, 1000);
+    return (context.todos = response.data);
+  } catch (error) {
+    console.error('::API GET', error);
+  }
 };
 
 export const postTodo = async ({ id, label, status }: Todo) => {
